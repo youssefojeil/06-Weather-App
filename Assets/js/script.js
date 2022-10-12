@@ -14,6 +14,8 @@
 
 // Fcuntion to display the search history list.
 
+
+/*
 function renderSearchHistory(){
     // empty the search history container
 
@@ -117,6 +119,8 @@ function handleSearchHistoryClick(e) {
 
 
 initSearchHistory();
+
+*/
 
 // click event to run the handleFormSubmit
 // click event to run the handleSearchHistoryClick
