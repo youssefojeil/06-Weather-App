@@ -20,7 +20,6 @@ function renderSearchHistory(){
     // loop through the history array creating a button for each item
     for(var i = 0; i < localStorage.length; i ++) {
     
-       console.log(localStorage.getItem(localStorage.key(i)));
        var city = localStorage.getItem(localStorage.key(i));
        var cityButton = document.createElement("button");
        
@@ -28,7 +27,6 @@ function renderSearchHistory(){
        cityButton.textContent = city;
        searchHistoryEl.appendChild(cityButton);
     }
-        // append to the search history container
     
 }
 
@@ -37,12 +35,9 @@ function renderSearchHistory(){
 // function to update history in local storage then updates displayed history 
 function appendToHistory(search) {
     // push search term into search history array
-    console.log(search);
     cityName = search.charAt(0).toUpperCase() + search.slice(1);
-    console.log(cityName);
     // set search history array to local storage
     localStorage.setItem(cityName,cityName);
-    console.log(localStorage);
 
     //var cityWeather 
     renderSearchHistory();
@@ -67,8 +62,7 @@ function renderCurrentWeather(cityName, data) {
     weatherEl.setAttribute("class", "basic-card-style");
     // temperature, wind speed, etc,
     cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
-    console.log(cityName);
-    console.log(data);
+
     var temp = data.current.temp;
     var windspeed = data.current.wind_speed;
     var humidity = data.current.humidity;
@@ -76,13 +70,8 @@ function renderCurrentWeather(cityName, data) {
     var iconCode = data.daily[0].weather[0].icon;
     var iconImg = document.createElement("img");
     iconImg.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    console.log(iconImg);
-    console.log(iconCode);
     
     var now = dayjs().format("MM/DD/YYYY");
-    console.log(temp);
-    console.log(windspeed);
-    console.log(humidity);
 
     // document.create the elements you'll want to put this info in
     var cityEl = document.createElement("h1")
@@ -104,11 +93,9 @@ function renderCurrentWeather(cityName, data) {
 }
 
 
-
 // Function to display 5 day forecast
 function renderForecast(dailyForecast) {
     // set up elements for this section
-    console.log(dailyForecast);
     
     forecastEl.innerHTML = "";
     var fiveDays = dailyForecast.length -3;
@@ -125,20 +112,10 @@ function renderForecast(dailyForecast) {
 
     var now = dayjs();
     
-
-
-    // append 
-    console.log(dailyForecast.length);
     // loop over dailyForecast
     for(var i = 0; i < fiveDays; i++){
         // send the data to our renderForecast Function as an arguement
-        console.log(dailyForecast);
-        console.log(dailyForecast[i].temp.day);
-        console.log(dailyForecast[i].wind_speed);
-        console.log(dailyForecast[i].humidity);
-        //renderForecastCard(dailyForecast[i]);
-        // create elements for a card   // document.create the elements you'll want to put this info in
-        //var cityEl = document.createElement("h1")
+
         var forecastCard = document.createElement("div");
         var tempEl = document.createElement("p");
         var windEl = document.createElement("p");
@@ -150,7 +127,6 @@ function renderForecast(dailyForecast) {
         iconImg.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
         var date = now.add(i+1, "day").format("MM/DD/YYYY");
-
 
         // append elements to document
         newForecastDiv.appendChild(forecastCard);
