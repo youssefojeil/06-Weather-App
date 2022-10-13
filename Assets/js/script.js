@@ -57,15 +57,35 @@ function appendToHistory(search) {
 
 // function to display the CURRENT weather data fetched from OpenWeather api.
 
-function renderCurrentWeather(city, weather) {
+function renderCurrentWeather(cityName, data) {
     // store response data from our fetch request in variables
         // temperature, wind speed, etc,
+        cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
+        console.log(cityName);
+        console.log(data);
+        var temp = data.current.temp;
+        var windspeed = data.current.wind_speed;
+        var humidity = data.current.humidity;
+        console.log(temp);
+        console.log(windspeed);
+        console.log(humidity);
 
-    // document.create the elements you'lll want to put this info in
-    
+    // document.create the elements you'll want to put this info in
+    var cityEl = document.createElement("h1")
+    var tempEl = document.createElement("p");
+    var windEl = document.createElement("p");
+    var humidityEl = document.createElement("p");
     // append elements to document
-
+    weatherEl.appendChild(cityEl);
+    weatherEl.appendChild(tempEl);
+    weatherEl.appendChild(windEl);
+    weatherEl.appendChild(humidityEl);
     // give them appropriate content
+    cityEl.textContent = cityName;
+    tempEl.textContent = `Temp: ${temp} °F`;
+    windEl.textContent = `Wind: ${windspeed} MPH`;
+    humidityEl.textContent = `Humidity: ${humidity} %`;
+    
 }
 
 
@@ -100,13 +120,11 @@ function renderForecast(dailyForecast) {
 }
 */
 
-function renderItems(cityName, temp, windspeed, humidity) {
-    var cityName = cityName;
-    var cityTemp = temp;
-    var cityWindSpeed = windspeed;
-    var cityHumidity = humidity;
-    renderCurrentWeather(cityName, cityTemp, cityWindSpeed, cityHumidity);
+function renderItems(cityName, data) {
+    console.log(data);
+    renderCurrentWeather(cityName, data);
     //renderForecast(data.list);
+    
 }
 
 
@@ -131,13 +149,8 @@ function fetchWeather(lat, lon, city) {
         console.log(response);
         response.json().then(function (data) {
           console.log(data);
-          var temp = data.current.temp;
-          var windspeed = data.current.wind_speed;
-          var humidity = data.current.humidity;
-          console.log(`temp is ${temp}`);
-          console.log(`windspeed is ${windspeed}`);
-          console.log(`humidity is ${humidity}`);
-          renderItems(cityName, temp, windspeed, humidity);
+          //renderItems(cityName, temp, windspeed, humidity);
+          renderItems(cityName, data);
         });
       } 
       else {
