@@ -2,6 +2,14 @@
 // search history as an empty array
 // weather api root url
 // api key
+//var baseURL = `https://api.openweathermap.org/data/3.0/onecall`;
+//var geoCodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=london&appid=${apiKey}`;
+var apiKey = `6735dc29946d3cda39fe5ca05b775eab`;
+var city;
+var queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
+
+//console.log(forecastURL);
+console.log(queryURL);
 
 
 // DOM element references
@@ -10,9 +18,20 @@
 // container/section for today's weather
 // container/section for the forecast
 // search history container
+var inputEl = document.getElementById("user-input");
+var searchEl = document.getElementById("search-btn");
+var weatherEl = document.querySelector(".weather");
+var forecastEl = document.querySelector(".forecast");
+var searchHistoryEl = document.querySelector(".search-history");
+
+console.log(inputEl);
+console.log(searchEl);
+console.log(weatherEl);
+console.log(forecastEl);
+console.log(searchHistoryEl);
 
 
-// Fcuntion to display the search history list.
+// Funtion to display the search history list.
 
 
 /*
@@ -24,6 +43,8 @@ function renderSearchHistory(){
         // append to the search history container
 }
 
+*/
+/*
 // function to update history in local storage then updates displayed history 
 function appendToHistory(search) {
     // push search term into search history array
@@ -32,7 +53,8 @@ function appendToHistory(search) {
 
     renderSearchHistory();
 }
-
+*/
+/*
 // function to display the CURRENT weather data fetched from OpenWeather api.
 
 function renderCurrentWeather(city, weather) {
@@ -46,7 +68,8 @@ function renderCurrentWeather(city, weather) {
     // give them appropriate content
 }
 
-
+*/
+/*
 // Function to display a FORECAST card given an object(from our renderforecast fucntion) from openweather api
 // daily forecast
 function renderForecastCard(forecast) {
@@ -61,7 +84,8 @@ function renderForecastCard(forecast) {
 
     // append to forecast section
 }
-
+*/
+/*
 // Function to display 5 day forecast
 function renderForecast(dailyForecast) {
     // set up elements for this section
@@ -74,13 +98,14 @@ function renderForecast(dailyForecast) {
             renderForecastCard(dailyForecast[i]);
         }
 }
-
+*/
+/*
 function renderItems(city, data) {
     renderCurrentWeather(city, data.list[0]);
     renderForecast(data.list);
 }
-
-
+*/
+/*
 // fetches weather data for given location from the weather geolocation
 // endpoint; then calls functions to display current and forecast weather data
 
@@ -91,36 +116,41 @@ function fetchWeather(location) {
 
     // fetch using the api url .then that returns response as json, .then that calls renderItems(city,data)
 }
-
+*/
+/*
 function fetchCoords(search) {
     // variable for your api url
 
     // fetch with your url, .then that returns the response in json, .then that does 2 things - calls appendToHistory(search), calls fetchWeather(the data)
 }
+*/
 
-function handleSearchFormSubmit(e) {
+function handleWeatherSearch() {
     // dont continue if there is nothing in the search form
-
-    if (!searchInput.value) {
+    //alert("Button Clicked!");
+    console.log(inputEl.value);
+    if (!inputEl.value) {
+        inputEl.value = "Please Enter a valid City!";
         return;
     }
-
-    e.preventDefault();
-    var search = searchInput.value.trim();
+    
+    var search = inputEl.value;
     fetchCoords(search);
-    serachInput.value = "";
+    inputEl.value = "";
 }
 
+/*
 function handleSearchHistoryClick(e) {
     // grab whatever city they clicked
 
     fetchCoords(search);
 }
-
-
-initSearchHistory();
-
 */
 
+//initSearchHistory();
+
+
+
 // click event to run the handleFormSubmit
+searchEl.addEventListener("click", handleWeatherSearch);
 // click event to run the handleSearchHistoryClick
