@@ -1,6 +1,6 @@
 body {
     background: #222;
-    background-image: url("/Assets/images/background-img.jpg");
+    background-image: url("./Assets/images/background-img.jpg");
     color: white;
     
 }

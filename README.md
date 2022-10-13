@@ -35,4 +35,6 @@ Check weather here: [Weather Dashboard](https://youssefojeil.github.io/06-Weathe
 
 ## Images
 
-![Screenshot](./Assets/Images/screenshot.png)
+![Main Page](./Assets/images/main-page.png)
+![Weather Display](./Assets/images/weather-display.png)
+

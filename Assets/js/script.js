@@ -1,38 +1,18 @@
 // Global variables
-// search history as an empty array
-// weather api root url
-// api key
-
-//
 var apiKey = `6735dc29946d3cda39fe5ca05b775eab`;
 var city;
-var queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
-
-//console.log(forecastURL);
-console.log(queryURL);
+var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
 
 
 // DOM element references
-// search form
-// search input
-// container/section for today's weather
-// container/section for the forecast
-// search history container
 var inputEl = document.getElementById("user-input");
 var searchEl = document.getElementById("search-btn");
 var weatherEl = document.querySelector(".weather");
 var forecastEl = document.querySelector(".forecast");
 var searchHistoryEl = document.querySelector(".search-history");
 
-console.log(inputEl);
-console.log(searchEl);
-console.log(weatherEl);
-console.log(forecastEl);
-console.log(searchHistoryEl);
-
 
 // Funtion to display the search history list.
-
 function renderSearchHistory(){
     // empty the search history container
     searchHistoryEl.innerHTML = "";
@@ -95,7 +75,7 @@ function renderCurrentWeather(cityName, data) {
 
     var iconCode = data.daily[0].weather[0].icon;
     var iconImg = document.createElement("img");
-    iconImg.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    iconImg.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
     console.log(iconImg);
     console.log(iconCode);
     
@@ -167,7 +147,7 @@ function renderForecast(dailyForecast) {
 
         var iconCode = dailyForecast[i].weather[0].icon;
         var iconImg = document.createElement("img");
-        iconImg.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        iconImg.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
         var date = now.add(i+1, "day").format("MM/DD/YYYY");
 
@@ -238,7 +218,7 @@ function fetchWeather(lat, lon, city) {
 function fetchCoords(search) {
     // variable for your api url
     var city = search;
-    var geoCodeUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
+    var geoCodeUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
     console.log(geoCodeUrl);
     
     // fetch with your url, .then that returns the response in json, .then that does 
