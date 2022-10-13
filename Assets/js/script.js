@@ -2,8 +2,8 @@
 // search history as an empty array
 // weather api root url
 // api key
-//var baseURL = `https://api.openweathermap.org/data/3.0/onecall`;
-//var geoCodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=london&appid=${apiKey}`;
+
+//
 var apiKey = `6735dc29946d3cda39fe5ca05b775eab`;
 var city;
 var queryURL = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
@@ -105,25 +105,77 @@ function renderItems(city, data) {
     renderForecast(data.list);
 }
 */
-/*
+
 // fetches weather data for given location from the weather geolocation
 // endpoint; then calls functions to display current and forecast weather data
-
-function fetchWeather(location) {
+function fetchWeather(lat, lon) {
     // variables of long, lat, city name - coming from location
-
+    var cityLat = lat;
+    var cityLon = lon;
+    console.log(cityLat);
+    console.log(cityLon);
     // api url
+    var apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${cityLat}&lon=${cityLon}&units=imperial&exclude=minutely,hourly,alerts&appid=${apiKey}`;
+    // fetch using the api url .then that returns response as json, 
+    //.then that calls renderItems(city,data)
+    console.log(apiUrl);
 
-    // fetch using the api url .then that returns response as json, .then that calls renderItems(city,data)
+    fetch(apiUrl)
+    .then(function (response) {
+      if (response.ok) {
+        console.log(response);
+        response.json().then(function (data) {
+          console.log(data);
+          var temp = data.current.temp;
+          var windspeed = data.current.wind_speed;
+          var humidity = data.current.humidity;
+          console.log(`temp is ${temp}`);
+          console.log(`windspeed is ${windspeed}`);
+          console.log(`humidity is ${humidity}`);
+          //fetchWeather(lat, lon);
+        });
+      } 
+      else {
+        alert('Error: ' + response.statusText);
+      }
+    })
+    .catch(function (error) {
+      alert('Unable to connect to Openweathermap');
+    });
 }
-*/
-/*
+
+
 function fetchCoords(search) {
     // variable for your api url
-
-    // fetch with your url, .then that returns the response in json, .then that does 2 things - calls appendToHistory(search), calls fetchWeather(the data)
+    var city = search;
+    var geoCodeUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
+    console.log(geoCodeUrl);
+    
+    // fetch with your url, .then that returns the response in json, .then that does 
+    // 2 things - calls appendToHistory(search), calls fetchWeather(the data)
+    
+    fetch(geoCodeUrl)
+    .then(function (response) {
+      if (response.ok) {
+        console.log(response);
+        response.json().then(function (data) {
+          console.log(`${city} lat is ${data[0].lat}`);
+          console.log(`${city} lon is ${data[0].lon}`);
+          var lat = data[0].lat;
+          var lon = data[0].lon;
+          //appendToHistory(search)
+          fetchWeather(lat, lon);
+        });
+      } 
+      else {
+        alert('Error: ' + response.statusText);
+      }
+    })
+    .catch(function (error) {
+      alert('Unable to connect to Openweathermap');
+    });
 }
-*/
+
 
 function handleWeatherSearch() {
     // dont continue if there is nothing in the search form
