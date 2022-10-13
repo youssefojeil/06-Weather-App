@@ -121,6 +121,7 @@ function renderForecast(dailyForecast) {
     // set up elements for this section
     console.log(dailyForecast);
     
+    forecastEl.innerHTML = "";
     var fiveDays = dailyForecast.length -3;
     
     var newForecastDiv = document.createElement("div");
@@ -160,11 +161,6 @@ function renderForecast(dailyForecast) {
             windEl.textContent = `Wind: ${dailyForecast[i].wind_speed} MPH`;
             humidityEl.textContent = `Humidity: ${dailyForecast[i].humidity} %`;
 
-            //append
-
-            // add content to elements
-
-            // append to forecast section
         }
        
 }
@@ -259,13 +255,15 @@ function handleWeatherSearch() {
     inputEl.value = "";
 }
 
-/*
+
 function handleSearchHistoryClick(e) {
     // grab whatever city they clicked
-
+    console.log(e.target.textContent);
+    console.log(this);
+    search = e.target.textContent;
     fetchCoords(search);
 }
-*/
+
 
 
 initSearchHistory();
@@ -273,4 +271,6 @@ initSearchHistory();
 
 // click event to run the handleFormSubmit
 searchEl.addEventListener("click", handleWeatherSearch);
+
 // click event to run the handleSearchHistoryClick
+searchHistoryEl.addEventListener("click", handleSearchHistoryClick);
