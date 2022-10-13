@@ -34,26 +34,42 @@ console.log(searchHistoryEl);
 // Funtion to display the search history list.
 
 
-/*
+
 function renderSearchHistory(){
     // empty the search history container
+    //searchHistoryEl.inn
 
     // loop through the history array creating a button for each item
-
+    for(var i = 0; i < localStorage.length; i ++) {
+    
+       console.log(localStorage.getItem(localStorage.key(i)));
+       var city = localStorage.getItem(localStorage.key(i));
+       var cityButton = document.createElement("button");
+       
+       cityButton.setAttribute("class" , "btn, btn-lg, btn-block history-btn");
+       cityButton.textContent = city;
+       searchHistoryEl.appendChild(cityButton);
+    }
         // append to the search history container
+        
 }
 
-*/
-/*
+
+
 // function to update history in local storage then updates displayed history 
 function appendToHistory(search) {
     // push search term into search history array
-
+    console.log(search);
+    cityName = search.charAt(0).toUpperCase() + search.slice(1);
+    console.log(cityName);
     // set search history array to local storage
+    localStorage.setItem(cityName,cityName);
+    console.log(localStorage);
 
+    //var cityWeather 
     renderSearchHistory();
 }
-*/
+
 
 // function to display the CURRENT weather data fetched from OpenWeather api.
 
@@ -149,7 +165,6 @@ function fetchWeather(lat, lon, city) {
         console.log(response);
         response.json().then(function (data) {
           console.log(data);
-          //renderItems(cityName, temp, windspeed, humidity);
           renderItems(cityName, data);
         });
       } 
@@ -181,7 +196,7 @@ function fetchCoords(search) {
           console.log(`${city} lon is ${data[0].lon}`);
           var lat = data[0].lat;
           var lon = data[0].lon;
-          //appendToHistory(search)
+          appendToHistory(search)
           fetchWeather(lat, lon, city);
         });
       } 
