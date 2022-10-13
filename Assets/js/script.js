@@ -195,18 +195,16 @@ function fetchCoords(search) {
     // variable for your api url
     var city = search;
     var geoCodeUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
-    console.log(geoCodeUrl);
+   
     
-    // fetch with your url, .then that returns the response in json, .then that does 
-    // 2 things - calls appendToHistory(search), calls fetchWeather(the data)
+
     
     fetch(geoCodeUrl)
     .then(function (response) {
       if (response.ok) {
-        console.log(response);
+
         response.json().then(function (data) {
-          console.log(`${city} lat is ${data[0].lat}`);
-          console.log(`${city} lon is ${data[0].lon}`);
+
           var lat = data[0].lat;
           var lon = data[0].lon;
           appendToHistory(search)
@@ -224,20 +222,20 @@ function fetchCoords(search) {
 
 
 function handleWeatherSearch() {
-    // dont continue if there is nothing in the search form
-    //alert("Button Clicked!");
+
+    // dont continue if input is empty
     console.log(inputEl.value);
     if (!inputEl.value) {
-        inputEl.value = "Please Enter a valid City!";
+        alert("Please Enter A Valid City!");
         return;
     }
-    
+    // if input full call fetch coords
     var search = inputEl.value;
     fetchCoords(search);
     inputEl.value = "";
 }
 
-
+// function for search history button to grab weather data 
 function handleSearchHistoryClick(e) {
     // grab whatever city they clicked
     console.log(e.target.textContent);
@@ -247,7 +245,7 @@ function handleSearchHistoryClick(e) {
 }
 
 
-
+// init local storage on reload
 initSearchHistory();
 
 
