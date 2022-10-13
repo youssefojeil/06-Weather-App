@@ -85,16 +85,24 @@ function renderCurrentWeather(cityName, data) {
     // empty out weather container
     weatherEl.innerHTML = "";
     weatherEl.setAttribute("class", "basic-card-style");
-        // temperature, wind speed, etc,
-        cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
-        console.log(cityName);
-        console.log(data);
-        var temp = data.current.temp;
-        var windspeed = data.current.wind_speed;
-        var humidity = data.current.humidity;
-        console.log(temp);
-        console.log(windspeed);
-        console.log(humidity);
+    // temperature, wind speed, etc,
+    cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
+    console.log(cityName);
+    console.log(data);
+    var temp = data.current.temp;
+    var windspeed = data.current.wind_speed;
+    var humidity = data.current.humidity;
+
+    var iconCode = data.daily[0].weather[0].icon;
+    var iconImg = document.createElement("img");
+    iconImg.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    console.log(iconImg);
+    console.log(iconCode);
+    
+    var now = dayjs().format("MM/DD/YYYY");
+    console.log(temp);
+    console.log(windspeed);
+    console.log(humidity);
 
     // document.create the elements you'll want to put this info in
     var cityEl = document.createElement("h1")
@@ -103,11 +111,12 @@ function renderCurrentWeather(cityName, data) {
     var humidityEl = document.createElement("p");
     // append elements to document
     weatherEl.appendChild(cityEl);
+    weatherEl.appendChild(iconImg);
     weatherEl.appendChild(tempEl);
     weatherEl.appendChild(windEl);
     weatherEl.appendChild(humidityEl);
     // give them appropriate content
-    cityEl.textContent = cityName;
+    cityEl.textContent = `${cityName} (${now})`;
     tempEl.textContent = `Temp: ${temp} °F`;
     windEl.textContent = `Wind: ${windspeed} MPH`;
     humidityEl.textContent = `Humidity: ${humidity} %`;
@@ -134,34 +143,51 @@ function renderForecast(dailyForecast) {
     headerForecast.textContent = "5 Day Forecast:";
     
 
+    var now = dayjs();
+    
+
+
     // append 
     console.log(dailyForecast.length);
     // loop over dailyForecast
-        for(var i = 0; i < fiveDays; i++){
-            // send the data to our renderForecast Function as an arguement
-            console.log(dailyForecast[i].temp.day);
-            console.log(dailyForecast[i].wind_speed);
-            console.log(dailyForecast[i].humidity);
-            //renderForecastCard(dailyForecast[i]);
-            // create elements for a card   // document.create the elements you'll want to put this info in
-            //var cityEl = document.createElement("h1")
-            var forecastCard = document.createElement("div");
-            var tempEl = document.createElement("p");
-            var windEl = document.createElement("p");
-            var humidityEl = document.createElement("p");
-            // append elements to document
-            newForecastDiv.appendChild(forecastCard);
-            forecastCard.setAttribute("class", "forecast-card, col");
-            forecastCard.appendChild(tempEl);
-            forecastCard.appendChild(windEl);
-            forecastCard.appendChild(humidityEl);
-            // give them appropriate content
+    for(var i = 0; i < fiveDays; i++){
+        // send the data to our renderForecast Function as an arguement
+        console.log(dailyForecast);
+        console.log(dailyForecast[i].temp.day);
+        console.log(dailyForecast[i].wind_speed);
+        console.log(dailyForecast[i].humidity);
+        //renderForecastCard(dailyForecast[i]);
+        // create elements for a card   // document.create the elements you'll want to put this info in
+        //var cityEl = document.createElement("h1")
+        var forecastCard = document.createElement("div");
+        var tempEl = document.createElement("p");
+        var windEl = document.createElement("p");
+        var humidityEl = document.createElement("p");
+        var dateEl = document.createElement("h4");
 
-            tempEl.textContent = `Temp: ${dailyForecast[i].temp.day} °F`;
-            windEl.textContent = `Wind: ${dailyForecast[i].wind_speed} MPH`;
-            humidityEl.textContent = `Humidity: ${dailyForecast[i].humidity} %`;
+        var iconCode = dailyForecast[i].weather[0].icon;
+        var iconImg = document.createElement("img");
+        iconImg.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
-        }
+        var date = now.add(i+1, "day").format("MM/DD/YYYY");
+
+
+        // append elements to document
+        newForecastDiv.appendChild(forecastCard);
+        forecastCard.setAttribute("class", "forecast-card, col");
+        forecastCard.appendChild(dateEl);
+        forecastCard.appendChild(iconImg);
+        forecastCard.appendChild(tempEl);
+        forecastCard.appendChild(windEl);
+        forecastCard.appendChild(humidityEl);
+        // give them appropriate content
+
+        dateEl.textContent = date;
+        tempEl.textContent = `Temp: ${dailyForecast[i].temp.day} °F`;
+        windEl.textContent = `Wind: ${dailyForecast[i].wind_speed} MPH`;
+        humidityEl.textContent = `Humidity: ${dailyForecast[i].humidity} %`;
+
+    }
        
 }
 
