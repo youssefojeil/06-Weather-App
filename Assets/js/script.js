@@ -33,11 +33,9 @@ console.log(searchHistoryEl);
 
 // Funtion to display the search history list.
 
-
-
 function renderSearchHistory(){
     // empty the search history container
-    //searchHistoryEl.inn
+    searchHistoryEl.innerHTML = "";
 
     // loop through the history array creating a button for each item
     for(var i = 0; i < localStorage.length; i ++) {
@@ -51,7 +49,7 @@ function renderSearchHistory(){
        searchHistoryEl.appendChild(cityButton);
     }
         // append to the search history container
-        
+    
 }
 
 
@@ -70,11 +68,22 @@ function appendToHistory(search) {
     renderSearchHistory();
 }
 
+// Function to get search history from local storage
+function initSearchHistory() {
+    // get search history item from local storage
+ 
+   // set search history array equal to what you got from local storage
+   renderSearchHistory();
+ }
+ 
+
 
 // function to display the CURRENT weather data fetched from OpenWeather api.
 
 function renderCurrentWeather(cityName, data) {
     // store response data from our fetch request in variables
+    // empty out weather container
+    weatherEl.innerHTML = "";
         // temperature, wind speed, etc,
         cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
         console.log(cityName);
@@ -121,25 +130,28 @@ function renderForecastCard(forecast) {
     // append to forecast section
 }
 */
-/*
+
+
 // Function to display 5 day forecast
 function renderForecast(dailyForecast) {
     // set up elements for this section
-
+    console.log(dailyForecast);
     // append 
-
+/*
     // loop over dailyForecast
         for(var i = 0; i < dailyForecast.length; i++){
             // send the data to our renderForecast Function as an arguement
             renderForecastCard(dailyForecast[i]);
         }
+        */
 }
-*/
+
 
 function renderItems(cityName, data) {
     console.log(data);
+    var dailyForcast = data.daily;
     renderCurrentWeather(cityName, data);
-    //renderForecast(data.list);
+    renderForecast(dailyForcast);
     
 }
 
@@ -232,8 +244,8 @@ function handleSearchHistoryClick(e) {
 }
 */
 
-//initSearchHistory();
 
+initSearchHistory();
 
 
 // click event to run the handleFormSubmit
