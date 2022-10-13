@@ -54,7 +54,7 @@ function appendToHistory(search) {
     renderSearchHistory();
 }
 */
-/*
+
 // function to display the CURRENT weather data fetched from OpenWeather api.
 
 function renderCurrentWeather(city, weather) {
@@ -68,7 +68,7 @@ function renderCurrentWeather(city, weather) {
     // give them appropriate content
 }
 
-*/
+
 /*
 // Function to display a FORECAST card given an object(from our renderforecast fucntion) from openweather api
 // daily forecast
@@ -99,19 +99,24 @@ function renderForecast(dailyForecast) {
         }
 }
 */
-/*
-function renderItems(city, data) {
-    renderCurrentWeather(city, data.list[0]);
-    renderForecast(data.list);
+
+function renderItems(cityName, temp, windspeed, humidity) {
+    var cityName = cityName;
+    var cityTemp = temp;
+    var cityWindSpeed = windspeed;
+    var cityHumidity = humidity;
+    renderCurrentWeather(cityName, cityTemp, cityWindSpeed, cityHumidity);
+    //renderForecast(data.list);
 }
-*/
+
 
 // fetches weather data for given location from the weather geolocation
 // endpoint; then calls functions to display current and forecast weather data
-function fetchWeather(lat, lon) {
+function fetchWeather(lat, lon, city) {
     // variables of long, lat, city name - coming from location
     var cityLat = lat;
     var cityLon = lon;
+    var cityName = city;
     console.log(cityLat);
     console.log(cityLon);
     // api url
@@ -132,7 +137,7 @@ function fetchWeather(lat, lon) {
           console.log(`temp is ${temp}`);
           console.log(`windspeed is ${windspeed}`);
           console.log(`humidity is ${humidity}`);
-          //fetchWeather(lat, lon);
+          renderItems(cityName, temp, windspeed, humidity);
         });
       } 
       else {
@@ -164,7 +169,7 @@ function fetchCoords(search) {
           var lat = data[0].lat;
           var lon = data[0].lon;
           //appendToHistory(search)
-          fetchWeather(lat, lon);
+          fetchWeather(lat, lon, city);
         });
       } 
       else {

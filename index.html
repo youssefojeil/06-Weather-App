@@ -10,18 +10,18 @@
     <title>Weather App</title>
 </head>
 <body>
-    <header class="container-fluid text-center text-white bg-dark p-2 weather-header">
+    <header class="container-fluid text-center text-white p-2 weather-header">
         <h1>Weather Dashboard</h1>
     </header>
 
     <!-- container-->
     <main class="p-2">
-        <div class="row">
+        <div class="row main-container">
           
-            <aside class="col-3">
+            <aside class="col-3 search-container">
                 <h2>Search for a City</h2>
                 <div class="">
-                    <input class="d-block" type="text" id="user-input" placeholder="Orlando">                
+                    <input class="d-block " type="text" id="user-input" placeholder="Orlando">                
                     <button class="btn btn-primary my-3" id="search-btn" type="button">Search</button>
                 </div>
                 <div class="search-history">
@@ -30,7 +30,7 @@
             
             </aside>
 
-            <div class="col-9">
+            <div class="col-9 weather-container">
                 <div class="d-flex flex-column bd-highlight mb-3">
                     <div class="p-2 weather">
                         Today's weather
