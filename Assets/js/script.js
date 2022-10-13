@@ -84,6 +84,7 @@ function renderCurrentWeather(cityName, data) {
     // store response data from our fetch request in variables
     // empty out weather container
     weatherEl.innerHTML = "";
+    weatherEl.setAttribute("class", "basic-card-style");
         // temperature, wind speed, etc,
         cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
         console.log(cityName);
@@ -114,36 +115,58 @@ function renderCurrentWeather(cityName, data) {
 }
 
 
-/*
-// Function to display a FORECAST card given an object(from our renderforecast fucntion) from openweather api
-// daily forecast
-function renderForecastCard(forecast) {
-    // variables for data from api
-        // temp, windspeed, etc
-    
-    // create elements for a card
-
-    //append
-
-    // add content to elements
-
-    // append to forecast section
-}
-*/
-
 
 // Function to display 5 day forecast
 function renderForecast(dailyForecast) {
     // set up elements for this section
     console.log(dailyForecast);
+    
+    var fiveDays = dailyForecast.length -3;
+    
+    var newForecastDiv = document.createElement("div");
+    var headerForecast = document.createElement("h2");
+    forecastEl.appendChild(headerForecast);
+    forecastEl.appendChild(newForecastDiv);
+
+    forecastEl.setAttribute("class", "basic-card-style");
+    newForecastDiv.setAttribute("class", "row");
+    headerForecast.textContent = "5 Day Forecast:";
+    
+
     // append 
-/*
+    console.log(dailyForecast.length);
     // loop over dailyForecast
-        for(var i = 0; i < dailyForecast.length; i++){
+        for(var i = 0; i < fiveDays; i++){
             // send the data to our renderForecast Function as an arguement
-            renderForecastCard(dailyForecast[i]);
+            console.log(dailyForecast[i].temp.day);
+            console.log(dailyForecast[i].wind_speed);
+            console.log(dailyForecast[i].humidity);
+            //renderForecastCard(dailyForecast[i]);
+            // create elements for a card   // document.create the elements you'll want to put this info in
+            //var cityEl = document.createElement("h1")
+            var forecastCard = document.createElement("div");
+            var tempEl = document.createElement("p");
+            var windEl = document.createElement("p");
+            var humidityEl = document.createElement("p");
+            // append elements to document
+            newForecastDiv.appendChild(forecastCard);
+            forecastCard.setAttribute("class", "forecast-card, col");
+            forecastCard.appendChild(tempEl);
+            forecastCard.appendChild(windEl);
+            forecastCard.appendChild(humidityEl);
+            // give them appropriate content
+
+            tempEl.textContent = `Temp: ${dailyForecast[i].temp.day} °F`;
+            windEl.textContent = `Wind: ${dailyForecast[i].wind_speed} MPH`;
+            humidityEl.textContent = `Humidity: ${dailyForecast[i].humidity} %`;
+
+            //append
+
+            // add content to elements
+
+            // append to forecast section
         }
-        */
+       
 }
 
 
