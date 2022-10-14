@@ -12,7 +12,7 @@ var forecastEl = document.querySelector(".forecast");
 var searchHistoryEl = document.querySelector(".search-history");
 
 
-// Funtion to display the search history list.
+// Funtion to display the search history list on page
 function renderSearchHistory(){
     // empty the search history container
     searchHistoryEl.innerHTML = "";
@@ -27,42 +27,42 @@ function renderSearchHistory(){
        cityButton.textContent = city;
        searchHistoryEl.appendChild(cityButton);
     }
-    
 }
 
 
 
 // function to update history in local storage then updates displayed history 
 function appendToHistory(search) {
-    // push search term into search history array
+    // convert first letter of city name to uppercase 
     cityName = search.charAt(0).toUpperCase() + search.slice(1);
-    // set search history array to local storage
-    localStorage.setItem(cityName,cityName);
+    
+    // set city name and key to local storage 
+    localStorage.setItem(cityName, cityName);
 
-    //var cityWeather 
+    // call render search history function
     renderSearchHistory();
 }
 
 // Function to get search history from local storage
 function initSearchHistory() {
-    // get search history item from local storage
- 
-   // set search history array equal to what you got from local storage
+    
+   // calls rendersearch history function
    renderSearchHistory();
  }
  
 
 
 // function to display the CURRENT weather data fetched from OpenWeather api.
-
 function renderCurrentWeather(cityName, data) {
-    // store response data from our fetch request in variables
-    // empty out weather container
+    
+    // empty out weather container & add styling
     weatherEl.innerHTML = "";
     weatherEl.setAttribute("class", "basic-card-style");
-    // temperature, wind speed, etc,
+   
+    // convert first letter of city name to uppercase
     cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
-
+    
+    // local variables from data object temperature, wind speed, etc,
     var temp = data.current.temp;
     var windspeed = data.current.wind_speed;
     var humidity = data.current.humidity;
@@ -71,9 +71,10 @@ function renderCurrentWeather(cityName, data) {
     var iconImg = document.createElement("img");
     iconImg.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
     
+    // get current date & format
     var now = dayjs().format("MM/DD/YYYY");
 
-    // document.create the elements you'll want to put this info in
+    // create elements needed
     var cityEl = document.createElement("h1")
     var tempEl = document.createElement("p");
     var windEl = document.createElement("p");
@@ -84,7 +85,7 @@ function renderCurrentWeather(cityName, data) {
     weatherEl.appendChild(tempEl);
     weatherEl.appendChild(windEl);
     weatherEl.appendChild(humidityEl);
-    // give them appropriate content
+    // give elements data
     cityEl.textContent = `${cityName} (${now})`;
     tempEl.textContent = `Temp: ${temp} °F`;
     windEl.textContent = `Wind: ${windspeed} MPH`;
@@ -95,27 +96,31 @@ function renderCurrentWeather(cityName, data) {
 
 // Function to display 5 day forecast
 function renderForecast(dailyForecast) {
-    // set up elements for this section
     
+    // clear out forecast container    
     forecastEl.innerHTML = "";
+    // one call api gives 8 day daily, subtract 3 to get the next 5 days
     var fiveDays = dailyForecast.length -3;
     
+    // create elements for current section 
     var newForecastDiv = document.createElement("div");
     var headerForecast = document.createElement("h2");
+    // append elements to document
     forecastEl.appendChild(headerForecast);
     forecastEl.appendChild(newForecastDiv);
 
+    // add styling to elements & content 
     forecastEl.setAttribute("class", "basic-card-style");
     newForecastDiv.setAttribute("class", "row");
     headerForecast.textContent = "5 Day Forecast:";
     
-
+    // get current date
     var now = dayjs();
     
     // loop over dailyForecast
     for(var i = 0; i < fiveDays; i++){
-        // send the data to our renderForecast Function as an arguement
-
+       
+        // create elements for each day card 
         var forecastCard = document.createElement("div");
         var tempEl = document.createElement("p");
         var windEl = document.createElement("p");
@@ -125,7 +130,7 @@ function renderForecast(dailyForecast) {
         var iconCode = dailyForecast[i].weather[0].icon;
         var iconImg = document.createElement("img");
         iconImg.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-
+ 
         var date = now.add(i+1, "day").format("MM/DD/YYYY");
 
         // append elements to document
@@ -136,42 +141,41 @@ function renderForecast(dailyForecast) {
         forecastCard.appendChild(tempEl);
         forecastCard.appendChild(windEl);
         forecastCard.appendChild(humidityEl);
-        // give them appropriate content
-
+        
+        // give elements appropriate data and content 
         dateEl.textContent = date;
         tempEl.textContent = `Temp: ${dailyForecast[i].temp.day} °F`;
         windEl.textContent = `Wind: ${dailyForecast[i].wind_speed} MPH`;
         humidityEl.textContent = `Humidity: ${dailyForecast[i].humidity} %`;
-
-    }
-       
+    } 
 }
 
-
+// render items function 
 function renderItems(cityName, data) {
-    console.log(data);
+    // variable to get data needed for forecast and pass to render forecast 
     var dailyForcast = data.daily;
+    // call render current weather & renderforecast
+    // pass city name and data object 
     renderCurrentWeather(cityName, data);
     renderForecast(dailyForcast);
     
 }
 
 
-// fetches weather data for given location from the weather geolocation
-// endpoint; then calls functions to display current and forecast weather data
+// fetch weather function 
 function fetchWeather(lat, lon, city) {
     // variables of long, lat, city name - coming from location
     var cityLat = lat;
     var cityLon = lon;
     var cityName = city;
-    console.log(cityLat);
-    console.log(cityLon);
+
     // api url
     var apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${cityLat}&lon=${cityLon}&units=imperial&exclude=minutely,hourly,alerts&appid=${apiKey}`;
     // fetch using the api url .then that returns response as json, 
     //.then that calls renderItems(city,data)
-    console.log(apiUrl);
 
+    // fetch onecall api data 
+    // & calls renderItems passing cityName & data obj
     fetch(apiUrl)
     .then(function (response) {
       if (response.ok) {
@@ -190,15 +194,15 @@ function fetchWeather(lat, lon, city) {
     });
 }
 
-
+// fetch coordinates function from user input
 function fetchCoords(search) {
-    // variable for your api url
+    // store user input in city 
     var city = search;
+    // geocode api 
     var geoCodeUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
    
-    
-
-    
+    // fetch geocode data and call history passing search 
+    // call fetch weather passing lat lon and city 
     fetch(geoCodeUrl)
     .then(function (response) {
       if (response.ok) {
@@ -220,11 +224,10 @@ function fetchCoords(search) {
     });
 }
 
-
+// user input function
 function handleWeatherSearch() {
 
     // dont continue if input is empty
-    console.log(inputEl.value);
     if (!inputEl.value) {
         alert("Please Enter A Valid City!");
         return;
@@ -238,9 +241,8 @@ function handleWeatherSearch() {
 // function for search history button to grab weather data 
 function handleSearchHistoryClick(e) {
     // grab whatever city they clicked
-    console.log(e.target.textContent);
-    console.log(this);
     search = e.target.textContent;
+    // call fetch coords func passing user input 
     fetchCoords(search);
 }
 
